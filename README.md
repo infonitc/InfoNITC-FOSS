@@ -291,7 +291,7 @@ This script is safe to run multiple times — it performs a merge operation, upd
 
 ## Contributing
 
-This project is maintained by a single developer and is specific to NIT Calicut. If you are a student or faculty member who identifies incorrect data (wrong bus timings, mess menu changes, updated contact numbers), the preferred way to report it is through the Feedback button on the live site, which links to a Google Form.
+This website is maintained by a single developer and is specific to NIT Calicut. If you are a student or faculty member who identifies incorrect data (wrong bus timings, mess menu changes, updated contact numbers), the preferred way to report it is through the Feedback button on the live site, which links to a Google Form.
 
 For code contributions or bug reports, open an issue on the GitHub repository.
 
