@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lora:wght@600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background .25s, color .25s;
+}
+
+::-webkit-scrollbar { height: 4px; width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c0ccee; border-radius: 4px; }
+
+input:focus, textarea:focus, select:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(0,48,135,0.10) !important;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: 'Inter', sans-serif; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+.nav-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+.nav-scroll::-webkit-scrollbar { display: none; }
+
+@keyframes spin   { to { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+.fade-in { animation: fadeIn .22s ease both; }
+
+/* ── Responsive grids ── */
+.grid-contacts { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 12px; }
+.grid-clubs    { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 12px; }
+.upcoming-row  { display: flex; gap: 10px; flex-wrap: wrap; }
+.upcoming-row > * { flex: 1; min-width: 110px; }
+
+@media (max-width: 480px) {
+  html { font-size: 15px; }
+  .grid-contacts { grid-template-columns: repeat(2, 1fr); gap: 9px; }
+  .grid-clubs    { grid-template-columns: 1fr; }
+  .hide-xs       { display: none !important; }
+}
+@media (max-width: 360px) {
+  .grid-contacts { grid-template-columns: 1fr 1fr; gap: 7px; }
+}
+@media (max-width: 540px) {
+  .grid-clubs { grid-template-columns: 1fr; }
+}
