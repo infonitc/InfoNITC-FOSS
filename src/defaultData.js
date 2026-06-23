@@ -1,4 +1,4 @@
-// ── Mess Day Menus (7-day rotation) ──────────────────────────────────────────
+// Mess Day Menus (7-day rotation)
 export const MESS_DAY_MENU = {
   "Day 1": {
     breakfast: "Masala Dosa, Idly, Vada, Poha, Chutney, Sambar",
@@ -152,7 +152,7 @@ export const DEFAULT_DATA = {
   ],
 };
 
-// ── Contacts (restructured) ───────────────────────────────────────────────────
+// Contacts (restructured)
 export const DEFAULT_CONTACTS = {
   official: [
     { id:"o1", name:"Director's Office",  number:"0495-2286100", note:"Ext 100" },
@@ -184,7 +184,7 @@ export const DEFAULT_CONTACTS = {
   ],
 };
 
-// ── Food & Dining ─────────────────────────────────────────────────────────────
+// Food & Dining
 export const DEFAULT_DINING = [
   {
     id: "d1",

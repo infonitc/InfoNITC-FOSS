@@ -19,7 +19,7 @@ function emptyForm(currentSection) {
   };
 }
 
-// ── Banner shown to regular users (and admin) on relevant sections ───────────
+// Banner shown to regular users (and admin) on relevant sections
 export function AnnouncementBanner({ data, section, T, isMobile }) {
   const announcements = data?.announcements || [];
   const today = new Date().toISOString().slice(0,10);
@@ -73,7 +73,7 @@ export function AnnouncementBanner({ data, section, T, isMobile }) {
   );
 }
 
-// ── Admin management panel ────────────────────────────────────────────────────
+// Admin management panel
 export default function AnnouncementManager({ data, setData, T, isMobile, sections }) {
   const announcements = data?.announcements || [];
   const [showAdd, setShowAdd] = useState(false);

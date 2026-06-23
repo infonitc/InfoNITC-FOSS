@@ -19,7 +19,6 @@ const IC = {
   arrow:  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{width:15,height:15,flexShrink:0}}><polyline points="9 18 15 12 9 6"/></svg>,
 };
 
-// ── Club Admin Login Modal ────────────────────────────────────────────────────
 function ClubAdminLoginModal({ clubs, clubPins, onLogin, onClose, T }) { 
   const [selectedClub, setSelectedClub] = useState(clubs[0]?.name || "");
   const [pin,  setPin]  = useState("");
@@ -99,7 +98,6 @@ return (
 );
 }
 
-// ── Set Pin Modal (main admin only) ──────────────────────────────────────────
 function SetPinModal({ clubName, currentPin, onSave, onClose, T }) {
   const [pin,  setPin]  = useState(currentPin || "");
   const [show, setShow] = useState(false);
@@ -150,7 +148,6 @@ function SetPinModal({ clubName, currentPin, onSave, onClose, T }) {
   );
 }
 
-// ── Main ClubsSection ─────────────────────────────────────────────────────────
 export default function ClubsSection({ data, setData, isAdmin, T, isMobile }) {
   const [selectedClub,    setSelectedClub]    = useState(null);
   const [secretPins, setSecretPins] = useState({});

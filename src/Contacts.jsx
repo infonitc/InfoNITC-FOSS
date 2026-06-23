@@ -2,12 +2,10 @@ import { useState } from "react";
 import { useDragReorder } from "./useDrag.js";
 import { DEFAULT_CONTACTS } from "./defaultData.js";
 
-// ── Auto-rickshaw SVG ─────────────────────────────────────────────────────────
 const AutoIcon = ({ size=32 }) => (
   <span style={{ fontSize: size * 0.75, lineHeight: 1 }}>🛺</span>
 );
 
-// ── Taxi / Car SVG ────────────────────────────────────────────────────────────
 const TaxiIcon = ({ size=32 }) => (
   <svg width={size} height={size} viewBox="0 0 64 40" fill="none">
     <rect x="6" y="14" width="52" height="18" rx="4" fill="#facc15" stroke="#ca8a04" strokeWidth="1.5"/>
@@ -39,7 +37,6 @@ const SUBSECTIONS = [
   { key:"other",     label:"Other Services",      emoji:"🔧" },
 ];
 
-// ── Generic draggable contact list ────────────────────────────────────────────
 function ContactList({ items, onReorder, onUpdate, onDelete, isAdmin, T, showTypeToggle=false }) {
   const [editing, setEditing] = useState(null);
   const [form,    setForm]    = useState({});
@@ -128,7 +125,6 @@ function ContactList({ items, onReorder, onUpdate, onDelete, isAdmin, T, showTyp
   );
 }
 
-// ── Add form ──────────────────────────────────────────────────────────────────
 function AddForm({ onSave, onCancel, T, showTypeToggle=false }) {
   const [form, setForm] = useState({ name:"", number:"", note:"", type:"auto" });
   const fv = k => e => setForm(p => ({...p, [k]: e.target.value}));
@@ -171,7 +167,6 @@ function AddForm({ onSave, onCancel, T, showTypeToggle=false }) {
   );
 }
 
-// ── Main ContactsSection ──────────────────────────────────────────────────────
 export default function ContactsSection({ data, setData, isAdmin, T, isMobile }) {
   const [activeTab, setActiveTab] = useState("official");
   const [adding,    setAdding]    = useState(false);

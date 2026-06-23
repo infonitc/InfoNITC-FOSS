@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 
-// ── Data ──────────────────────────────────────────────────────────────────────
 
 const UG_DEPARTMENTS = [
   { name:"Computer Science & Engineering",         sems:8 },
@@ -144,18 +143,18 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
   const exams       = examData.exams || {};
   const customDepts = data.customDepartments || [];
 
-  // ── Navigation state ───────────────────────────────────────────────────────
+  // Navigation state
   const [level,    setLevel]    = useState("ug"); // "ug" | "pg"
   const [pgStream, setPgStream] = useState(null);  // e.g. "CSE"
   const [dept,     setDept]     = useState(null);
   const [sem,      setSem]      = useState(null);
 
-  // ── Exam CRUD state ────────────────────────────────────────────────────────
+  // Exam CRUD state
   const [showAdd,  setShowAdd]  = useState(false);
   const [editing,  setEditing]  = useState(null);
   const [form,     setForm]     = useState(emptyExam());
 
-  // ── Dept management state ──────────────────────────────────────────────────
+  // Dept management state
   const [showAddDept,  setShowAddDept]  = useState(false);
   const [editingDept,  setEditingDept]  = useState(null);
   const [deptForm,     setDeptForm]     = useState({ name:"", semesters:"" });
@@ -190,7 +189,7 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
 
   const delExam = id => updateExams({ ...exams, [key]: entries.filter(e=>e.id!==id) });
 
-  // ── Dept CRUD ──────────────────────────────────────────────────────────────
+  // Dept CRUD
   const saveDept = () => {
     const newName = deptForm.name.trim();
     const sems    = deptForm.semesters.split(",").map(s=>s.trim()).filter(Boolean);
@@ -230,7 +229,7 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
     if (dept===deptName) { setDept(null); setSem(null); }
   };
 
-  // ── Helpers ────────────────────────────────────────────────────────────────
+  // Helpers
   const examCountFor = (deptName) => {
     return semesters.reduce((sum,s)=>{
       return sum + ((exams[`${deptName}||${s}`]||[]).length);
@@ -258,7 +257,7 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
     letterSpacing:.5, textTransform:"uppercase", display:"block",
   };
 
-  // ── Chip button helper ─────────────────────────────────────────────────────
+  // Chip button helper
   const Chip = ({ label, active, onClick, badge, isCustom }) => (
     <button onClick={onClick}
       style={{ background:active?T.navy:T.light, color:active?"#fff":T.text,
@@ -321,7 +320,7 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
         {isOdd?"S1, S3, S5, S7":"S2, S4, S6, S8"}
       </div>
 
-      {/* ── LEVEL TABS: UG | PG ── */}
+      {/* LEVEL TABS: UG | PG */}
       <div style={{ display:"flex", gap:0, marginBottom:20,
         background:T.surface2, borderRadius:12, padding:4,
         border:`1px solid ${T.border}`, width:"fit-content" }}>
@@ -336,7 +335,7 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
         ))}
       </div>
 
-      {/* ── UG DEPARTMENTS ── */}
+      {/* UG DEPARTMENTS */}
       {level==="ug" && (
         <div style={{ marginBottom:20 }}>
           <div style={{ fontSize:11, fontWeight:600, color:T.muted, marginBottom:10,
@@ -367,7 +366,7 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
         </div>
       )}
 
-      {/* ── PG STREAM SELECTOR ── */}
+      {/* PG STREAM SELECTOR */}
       {level==="pg" && (
         <div>
           <div style={{ marginBottom:16 }}>
@@ -413,7 +412,7 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
         </div>
       )}
 
-      {/* ── Admin: Add Department ── */}
+      {/* Admin: Add Department */}
       {isAdmin && (
         <div style={{ marginBottom:16 }}>
           <button onClick={()=>{ setShowAddDept(s=>!s); setDeptForm({name:"",semesters:""}); setDeptErr(""); setEditingDept(null); }}
@@ -457,7 +456,7 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
         </div>
       )}
 
-      {/* ── SEMESTER SELECTOR ── */}
+      {/* SEMESTER SELECTOR */}
       {dept && (
         <div style={{ marginBottom:20 }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
@@ -505,7 +504,7 @@ export default function ExamSchedule({ data, setData, isAdmin, T, isMobile }) {
         </div>
       )}
 
-      {/* ── EXAM LIST ── */}
+      {/* EXAM LIST */}
       {sem && (
         <div>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",

@@ -1,17 +1,15 @@
-// ─────────────────────────────────────────────────────────────────────────────
 // Nutritional data for NITC Mess Menu
 // Sources: IFCT 2017 (Indian Food Composition Tables), NIN Hyderabad,
 //          USDA FoodData Central for items not in IFCT.
 // All values per SERVING (not per 100g) unless stated.
 // Disclaimer: Approximate values based on standard serving sizes.
-// ─────────────────────────────────────────────────────────────────────────────
 
-// ── Per-item nutrition ────────────────────────────────────────────────────────
+// Per-item nutrition
 // { kcal, protein(g), carbs(g), fat(g), fibre(g), sugar(g), sodium(mg),
 //   calcium(mg), iron(mg), vitC(mg), vitA(mcg), serving }
 
 const ITEMS = {
-  // ── BREAKFAST STAPLES ─────────────────────────────────────────────────────
+  // BREAKFAST STAPLES
   "idli_1pc":         { kcal:39,  protein:1.7, carbs:8.0,  fat:0.2, fibre:0.5, sugar:0.2, sodium:100, calcium:12,  iron:0.3, vitC:0,  vitA:0,   serving:"1 piece (40g)" },
   "masala_dosa":      { kcal:210, protein:5.0, carbs:32.0, fat:7.0, fibre:2.0, sugar:1.5, sodium:320, calcium:30,  iron:1.2, vitC:5,  vitA:15,  serving:"1 dosa (150g)" },
   "rava_dosa":        { kcal:185, protein:4.5, carbs:28.0, fat:6.5, fibre:1.2, sugar:1.0, sodium:290, calcium:20,  iron:0.9, vitC:0,  vitA:0,   serving:"1 dosa (120g)" },
@@ -42,7 +40,7 @@ const ITEMS = {
   "milk_200ml":       { kcal:130, protein:6.8, carbs:9.6,  fat:7.2, fibre:0,   sugar:9.6, sodium:100, calcium:240, iron:0.1, vitC:2,  vitA:70,  serving:"200ml" },
   "green_gram_boiled":{ kcal:105, protein:7.0, carbs:19.0, fat:0.4, fibre:7.6, sugar:1.5, sodium:15,  calcium:27,  iron:1.4, vitC:3,  vitA:5,   serving:"½ cup (75g)" },
 
-  // ── LUNCH / DINNER STAPLES (mandatory items) ──────────────────────────────
+  // LUNCH / DINNER STAPLES (mandatory items)
   "rice_cooked":      { kcal:206, protein:4.3, carbs:45.0, fat:0.4, fibre:0.6, sugar:0,   sodium:1,   calcium:16,  iron:0.4, vitC:0,  vitA:0,   serving:"1 cup (180g)" },
   "kerala_rice":      { kcal:200, protein:4.0, carbs:44.0, fat:0.5, fibre:0.8, sugar:0,   sodium:3,   calcium:10,  iron:0.6, vitC:0,  vitA:0,   serving:"1 cup (180g)" },
   "sambar":           { kcal:85,  protein:4.5, carbs:12.0, fat:2.5, fibre:3.5, sugar:2.0, sodium:350, calcium:45,  iron:1.5, vitC:10, vitA:50,  serving:"1 cup (200ml)" },
@@ -58,7 +56,7 @@ const ITEMS = {
   "veg_salad_100g":   { kcal:35,  protein:1.5, carbs:6.0,  fat:0.5, fibre:2.0, sugar:3.0, sodium:50,  calcium:30,  iron:0.5, vitC:15, vitA:40,  serving:"100g (PDF spec)" },
   "raita":            { kcal:60,  protein:3.0, carbs:5.0,  fat:3.0, fibre:0.5, sugar:4.0, sodium:120, calcium:100, iron:0.2, vitC:5,  vitA:20,  serving:"½ cup (100g)" },
 
-  // ── CHICKEN / EGG / FISH (lunch/dinner) ───────────────────────────────────
+  // CHICKEN / EGG / FISH (lunch/dinner)
   "chicken_lunch_80g":{ kcal:165, protein:22.0,carbs:3.0,  fat:7.5, fibre:0.5, sugar:0.5, sodium:380, calcium:20,  iron:1.2, vitC:0,  vitA:25,  serving:"80g chicken + 20g masala (PDF spec)" },
   "chicken_dinner_100g":{kcal:205,protein:27.5,carbs:4.0,  fat:9.0, fibre:0.5, sugar:0.5, sodium:470, calcium:25,  iron:1.5, vitC:0,  vitA:30,  serving:"100g chicken + 20g masala (PDF spec)" },
   "fish_fry_75g":     { kcal:145, protein:18.0,carbs:5.0,  fat:6.0, fibre:0,   sugar:0.2, sodium:320, calcium:180, iron:1.0, vitC:0,  vitA:20,  serving:"75g fish slice (PDF spec)" },
@@ -67,13 +65,13 @@ const ITEMS = {
   "egg_bhurji":       { kcal:175, protein:11.5,carbs:4.0,  fat:12.5,fibre:0.8, sugar:1.5, sodium:360, calcium:55,  iron:1.8, vitC:5,  vitA:140, serving:"2 eggs with onion/tomato" },
   "netholi_75g":      { kcal:110, protein:16.0,carbs:2.0,  fat:4.5, fibre:0,   sugar:0,   sodium:310, calcium:220, iron:1.2, vitC:0,  vitA:15,  serving:"75g Netholi (PDF spec)" },
 
-  // ── PANEER DISHES ─────────────────────────────────────────────────────────
+  // PANEER DISHES
   "paneer_dish_50g":  { kcal:165, protein:8.5, carbs:6.0,  fat:12.0,fibre:0.5, sugar:1.5, sodium:280, calcium:200, iron:0.5, vitC:3,  vitA:40,  serving:"50g paneer (PDF spec) + gravy" },
   "paneer_butter_masala":{ kcal:220,protein:10.0,carbs:12.0,fat:16.0,fibre:1.5,sugar:4.0, sodium:420, calcium:220, iron:0.8, vitC:8,  vitA:80,  serving:"50g paneer + sauce" },
   "mutter_paneer":    { kcal:190, protein:9.5, carbs:14.0, fat:11.5,fibre:3.0, sugar:3.0, sodium:350, calcium:180, iron:1.5, vitC:10, vitA:50,  serving:"50g paneer + peas" },
   "kadai_paneer":     { kcal:200, protein:9.0, carbs:10.0, fat:14.0,fibre:2.0, sugar:3.5, sodium:380, calcium:195, iron:0.8, vitC:15, vitA:70,  serving:"50g paneer + veggies" },
 
-  // ── VEG CURRIES / SIDE DISHES ─────────────────────────────────────────────
+  // VEG CURRIES / SIDE DISHES
   "rajma_masala":     { kcal:165, protein:9.5, carbs:27.0, fat:3.5, fibre:7.5, sugar:2.0, sodium:380, calcium:55,  iron:2.5, vitC:5,  vitA:15,  serving:"1 cup (180g)" },
   "aloo_fry":         { kcal:140, protein:2.5, carbs:22.0, fat:5.0, fibre:2.0, sugar:1.0, sodium:220, calcium:15,  iron:1.0, vitC:15, vitA:5,   serving:"1 serve (120g)" },
   "chana_masala":     { kcal:160, protein:8.5, carbs:24.0, fat:4.5, fibre:6.5, sugar:2.5, sodium:340, calcium:60,  iron:3.0, vitC:8,  vitA:20,  serving:"1 cup (180g)" },
@@ -93,7 +91,7 @@ const ITEMS = {
   "chicken_curry":    { kcal:195, protein:22.0,carbs:6.0,  fat:9.5, fibre:1.0, sugar:2.0, sodium:420, calcium:30,  iron:1.5, vitC:5,  vitA:25,  serving:"1 serve (150g)" },
   "capsicum_corn_curry":{ kcal:130,protein:4.0, carbs:18.0, fat:5.5, fibre:3.5, sugar:5.0, sodium:280, calcium:30,  iron:0.8, vitC:50, vitA:30,  serving:"1 cup (150g)" },
 
-  // ── BIRIYANI / RICE DISHES ────────────────────────────────────────────────
+  // BIRIYANI / RICE DISHES
   "chicken_biriyani": { kcal:420, protein:28.0,carbs:55.0, fat:10.0,fibre:2.0, sugar:2.0, sodium:650, calcium:50,  iron:2.5, vitC:5,  vitA:30,  serving:"1 plate (300g)" },
   "veg_biriyani":     { kcal:350, protein:8.0, carbs:60.0, fat:9.0, fibre:3.5, sugar:2.5, sodium:520, calcium:55,  iron:2.0, vitC:8,  vitA:40,  serving:"1 plate (280g)" },
   "egg_biriyani":     { kcal:380, protein:18.0,carbs:55.0, fat:10.5,fibre:2.0, sugar:2.0, sodium:580, calcium:60,  iron:2.2, vitC:3,  vitA:80,  serving:"1 plate (280g)" },
@@ -129,7 +127,7 @@ const ITEMS = {
   "mirchi_salan":     { kcal:130, protein:3.5, carbs:10.0, fat:9.0, fibre:2.5, sugar:3.0, sodium:290, calcium:40,  iron:1.0, vitC:30, vitA:15,  serving:"1 serve (100g)" },
   "wheat_upma":       { kcal:155, protein:4.5, carbs:27.0, fat:3.5, fibre:2.5, sugar:0.5, sodium:200, calcium:20,  iron:1.5, vitC:0,  vitA:0,   serving:"1 cup (120g)" },
 
-  // ── EVENING TEA SNACKS ────────────────────────────────────────────────────
+  // EVENING TEA SNACKS
   "snacks_generic":   { kcal:180, protein:4.0, carbs:25.0, fat:7.0, fibre:1.5, sugar:3.0, sodium:280, calcium:20,  iron:0.8, vitC:0,  vitA:0,   serving:"1 serve (varies)" },
   "veg_samosa":       { kcal:130, protein:3.0, carbs:18.0, fat:5.5, fibre:2.0, sugar:1.0, sodium:250, calcium:20,  iron:0.8, vitC:3,  vitA:5,   serving:"1 piece (60g)" },
   "bread_pakoda":     { kcal:165, protein:5.0, carbs:22.0, fat:7.0, fibre:1.5, sugar:1.0, sodium:300, calcium:40,  iron:1.2, vitC:2,  vitA:10,  serving:"1 piece (70g)" },
@@ -144,7 +142,7 @@ const ITEMS = {
   "masala_pav":       { kcal:185, protein:5.0, carbs:28.0, fat:6.0, fibre:2.0, sugar:3.0, sodium:360, calcium:45,  iron:1.0, vitC:8,  vitA:20,  serving:"1 serve (120g)" },
 };
 
-// ── MANDATORY ITEMS (added to every meal) ────────────────────────────────────
+// MANDATORY ITEMS (added to every meal)
 const MANDATORY_BREAKFAST = [
   "boiled_egg","cornflakes_20g","bread_2sl","seasonal_fruit","milk_200ml","green_gram_boiled",
 ];
@@ -159,7 +157,7 @@ const MANDATORY_DINNER = [
   "buttermilk_50ml","rasam","pickle","papad","veg_salad_100g",
 ];
 
-// ── Day menus — item keys per day/meal ───────────────────────────────────────
+// Day menus — item keys per day/meal
 const DAY_ITEMS = {
   "Day 1": {
     breakfast: ["masala_dosa","idli_1pc","idli_1pc","vada_1pc","poha",...MANDATORY_BREAKFAST],
@@ -205,7 +203,7 @@ const DAY_ITEMS = {
   },
 };
 
-// ── E Mess (fixed weekly) ────────────────────────────────────────────────────
+// E Mess (fixed weekly)
 const E_MESS_ITEMS = {
   Monday: {
     breakfast: ["masala_dosa","poha",...MANDATORY_BREAKFAST],
@@ -251,7 +249,7 @@ const E_MESS_ITEMS = {
   },
 };
 
-// ── Helper: sum nutrition for a list of item keys ────────────────────────────
+// Helper: sum nutrition for a list of item keys
 export function sumNutrition(itemKeys) {
   const result = {
     kcal:0, protein:0, carbs:0, fat:0, fibre:0,
@@ -272,14 +270,14 @@ export function sumNutrition(itemKeys) {
   return { totals: result, sources, missing };
 }
 
-// ── Public API: get nutrition for a rotational day/meal ──────────────────────
+// Public API: get nutrition for a rotational day/meal
 export function getRotationalNutrition(dayKey, meal) {
   const items = DAY_ITEMS[dayKey]?.[meal];
   if (!items) return null;
   return sumNutrition(items);
 }
 
-// ── Public API: get nutrition for E mess ─────────────────────────────────────
+// Public API: get nutrition for E mess
 export function getEMessNutrition(dayName, meal) {
   const items = E_MESS_ITEMS[dayName]?.[meal];
   if (!items) return null;

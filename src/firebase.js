@@ -20,7 +20,6 @@ const app = initializeApp(firebaseConfig);
 export const db   = getFirestore(app);
 export const auth = getAuth(app);
 
-// ── Auth ──────────────────────────────────────────────────────────────────────
 export const loginAdmin   = (email, pw) => signInWithEmailAndPassword(auth, email, pw);
 export const logoutAdmin  = ()          => signOut(auth);
 export const onAuthChanged = (cb)       => onAuthStateChanged(auth, cb);
@@ -32,7 +31,6 @@ export const changeAdminPassword = async (current, next) => {
   await updatePassword(user, next);
 };
 
-// ── Firestore ─────────────────────────────────────────────────────────────────
 export async function loadData(defaultData) {
   try {
     const ref  = doc(db, "sitedata", "main");
@@ -49,7 +47,6 @@ export async function loadData(defaultData) {
     try {
       const cached = localStorage.getItem("nitc_offline_data");
       if (cached) {
-        console.log("Loading from offline cache");
         return JSON.parse(cached);
       }
     } catch {}
@@ -100,7 +97,7 @@ export async function saveLostFound(lostFoundData) {
   }
 }
 
-// ── Cloudinary: image upload (replaces Firebase Storage) ──────────────────────
+// Cloudinary: image upload (replaces Firebase Storage)
 const CLOUDINARY_CLOUD_NAME  = "dayr2kxkg";
 const CLOUDINARY_UPLOAD_PRESET = "nitc_uploads";
 const CLOUDINARY_UPLOAD_URL  = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
@@ -129,6 +126,4 @@ export async function deleteMenuImage(url) {
   // Cloudinary deletion requires server-side signed requests (API secret),
   // which we intentionally do not expose in client code for security.
   // Images can be deleted manually from the Cloudinary Media Library if needed.
-  // This function is kept as a no-op so existing calls don't break.
-  console.log("Image removed from app — Cloudinary asset retained:", url);
 }

@@ -13,7 +13,6 @@ import { getRotationalNutrition, getEMessNutrition } from "./nutritionData.js";
 import LostFound from "./LostFound.jsx";
 import AnnouncementManager, { AnnouncementBanner } from "./Announcement.jsx";
 
-// ─── Theme ────────────────────────────────────────────────────────────────────
 function makeTheme(dark) {
   return dark ? {
     bg:"#0f1117",surface:"#1a1d27",surface2:"#22263a",border:"#2e3350",
@@ -322,7 +321,6 @@ function InstallButton() {
   );
 }
 
-// ─── Logo ─────────────────────────────────────────────────────────────────────
 function Logo({size=40}){
   return(
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
@@ -353,7 +351,6 @@ function DarkToggle({dark,toggle}){
   );
 }
 
-// ─── Icons ────────────────────────────────────────────────────────────────────
 const mk=(d,w=16)=><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{width:w,height:w,flexShrink:0}}><path d={d}/></svg>;
 const IC={
   mess:    mk("M3 11l19-9-9 19-2-8-8-2z"),
@@ -381,7 +378,6 @@ const IC={
   chevDown: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{width:14,height:14,flexShrink:0}}><polyline points="6 9 12 15 18 9"/></svg>,
 };
 
-// ─── Shared primitives ────────────────────────────────────────────────────────
 const Tag=({label})=>(
   <span style={{display:"inline-block",background:TAG_COLORS[label]||"#555",color:"#fff",
     fontSize:10,fontWeight:700,letterSpacing:.7,padding:"3px 8px",borderRadius:4,textTransform:"uppercase",whiteSpace:"nowrap"}}>
@@ -462,7 +458,6 @@ const Ov=({onClose,children,T})=>(
   </div>
 );
 
-// ─── Bus time helpers ─────────────────────────────────────────────────────────
 function parseTime(str){
   const clean=str.replace(/\(S\)/g,"").trim();
   const [time,mer]=clean.split(" ");
@@ -480,7 +475,6 @@ function getBusStatus(timings){
   return{parsed,nowMins,nextIdx};
 }
 
-// ─── App ──────────────────────────────────────────────────────────────────────
 export default function App(){
   const [section,      setSection]     = useState("mess");
   const [data,         setDataState]   = useState(null);
@@ -816,7 +810,6 @@ const swipeHandlers = useSwipe(goNext, goPrev);
   );
 }
 
-// ─── Modals ───────────────────────────────────────────────────────────────────
 function LoginModal({onClose,onLogin,T}){
   const [email,setEmail]=useState("");
   const [pw,setPw]=useState("");const [err,setErr]=useState("");const [loading,setLoading]=useState(false);
@@ -885,7 +878,6 @@ function PwChangeModal({onClose,T}){
   );
 }
 
-// ─── Mess Section ─────────────────────────────────────────────────────────────
 function MessSection({data,setData,isAdmin,T,isMobile,messPref,saveMessPref,clearMessPref}){
   const todayIdx=new Date().getDay()===0?6:new Date().getDay()-1;
   const [aDay,setADay]=useState(DAYS[todayIdx]);
@@ -1218,7 +1210,6 @@ function BusSection({data,setData,isAdmin,T,isMobile}){
   );
 }
 
-// ─── Notices ──────────────────────────────────────────────────────────────────
 function NoticesSection({data,setData,isAdmin,T}){
   const [showAdd,setSA]=useState(false);const [editing,setEd]=useState(null);
   const [form,setForm]=useState({title:"",body:"",date:"",tag:"General"});
