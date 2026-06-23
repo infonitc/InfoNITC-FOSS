@@ -5,7 +5,7 @@ A progressive web application built for students of NIT Calicut, providing centr
 **Live:** [infonitc.vercel.app](https://infonitc.vercel.app)
 
 ---
-
+ 
 ## Table of Contents
 
 1. [Overview](#overview)
