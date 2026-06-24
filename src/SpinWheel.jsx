@@ -36,18 +36,13 @@ export default function SpinWheel({ places, T, showThavalam }) {
 
   // Pick random winner
   const winnerIdx = Math.floor(Math.random() * count);
-
-  // Calculate exact offset so winner lands perfectly in centre
-  // Centre slot = offset such that winnerIdx * ITEM_H is at the middle of the window
-  // We add several full loops for the spinning effect
   const loops = 4 + Math.floor(Math.random() * 3);
   const targetOffset = loops * totalH + winnerIdx * ITEM_H;
 
   const duration  = 3500;
   const startTime = performance.now();
-  const startOff  = 0; // always start from 0 for clean calculation
+  const startOff  = 0; 
 
-  // Reset offset to 0 before spinning
   offsetRef.current = 0;
   setOffset(0);
 
@@ -65,7 +60,7 @@ export default function SpinWheel({ places, T, showThavalam }) {
     if (progress < 1) {
       animRef.current = requestAnimationFrame(animate);
     } else {
-      // Final offset is exactly winnerIdx * ITEM_H (mod totalH)
+      
       offsetRef.current = winnerIdx * ITEM_H;
       setOffset(winnerIdx * ITEM_H);
       setSpinning(false);
@@ -83,7 +78,7 @@ export default function SpinWheel({ places, T, showThavalam }) {
     return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
   }, [count]);
 
-  // Which items are visible in the 5-slot window
+ 
   const windowCount = 5;
   const windowH     = windowCount * ITEM_H;
   const startIdx    = Math.floor(offset / ITEM_H) - Math.floor(windowCount / 2);
