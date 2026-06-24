@@ -15,6 +15,8 @@ export default function SpinWheel({ places, T, showThavalam }) {
   const [offset,    setOffset]    = useState(0);
   const [winner,    setWinner]    = useState(null);
   const [showWinner,setShowWinner]= useState(false);
+  const [showDetail,setShowDetail]= useState(false);
+  const [lightbox,  setLightbox]  = useState(null); // image url being viewed full-screen
   const animRef   = useRef(null);
   const startRef  = useRef(null);
   const offsetRef = useRef(0);
@@ -32,17 +34,23 @@ export default function SpinWheel({ places, T, showThavalam }) {
   if (spinning) return;
   setWinner(null);
   setShowWinner(false);
+  setShowDetail(false);
   setSpinning(true);
 
   // Pick random winner
   const winnerIdx = Math.floor(Math.random() * count);
+
+  // Calculate exact offset so winner lands perfectly in centre
+  // Centre slot = offset such that winnerIdx * ITEM_H is at the middle of the window
+  // We add several full loops for the spinning effect
   const loops = 4 + Math.floor(Math.random() * 3);
   const targetOffset = loops * totalH + winnerIdx * ITEM_H;
 
   const duration  = 3500;
   const startTime = performance.now();
-  const startOff  = 0; 
+  const startOff  = 0; // always start from 0 for clean calculation
 
+  // Reset offset to 0 before spinning
   offsetRef.current = 0;
   setOffset(0);
 
@@ -60,11 +68,11 @@ export default function SpinWheel({ places, T, showThavalam }) {
     if (progress < 1) {
       animRef.current = requestAnimationFrame(animate);
     } else {
-      
+      // Final offset is exactly winnerIdx * ITEM_H (mod totalH)
       offsetRef.current = winnerIdx * ITEM_H;
       setOffset(winnerIdx * ITEM_H);
       setSpinning(false);
-      setWinner(names[winnerIdx]);
+      setWinner(places[winnerIdx]);
       setTimeout(() => setShowWinner(true), 400);
     }
   };
@@ -78,7 +86,7 @@ export default function SpinWheel({ places, T, showThavalam }) {
     return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
   }, [count]);
 
- 
+  // Which items are visible in the 5-slot window
   const windowCount = 5;
   const windowH     = windowCount * ITEM_H;
   const startIdx    = Math.floor(offset / ITEM_H) - Math.floor(windowCount / 2);
@@ -277,10 +285,10 @@ export default function SpinWheel({ places, T, showThavalam }) {
               fontSize:26, fontWeight:900, color:T.navy,
               marginBottom:24, lineHeight:1.2,
             }}>
-              {winner}
+              {winner.name}
             </div>
             <button
-              onClick={()=>{ setShowWinner(false); setShowWheel(false); }}
+              onClick={()=>{ setShowWinner(false); setShowDetail(true); }}
               style={{
                 width:"100%", border:"none", borderRadius:12,
                 padding:"13px", fontSize:15, fontWeight:800,
@@ -304,6 +312,104 @@ export default function SpinWheel({ places, T, showThavalam }) {
               Spin again
             </button>
           </div>
+        </div>
+      )}
+
+      {/* Place detail card */}
+      {showDetail && winner && (
+        <div onClick={() => setShowDetail(false)} style={{
+          position:"fixed", inset:0,
+          background:"rgba(0,0,20,.85)", zIndex:10000,
+          backdropFilter:"blur(6px)",
+          display:"flex", alignItems:"center", justifyContent:"center",
+          padding:"16px 14px", boxSizing:"border-box",
+        }}>
+          <div onClick={e => e.stopPropagation()} style={{
+            background:T.surface, borderRadius:20, width:"100%", maxWidth:380,
+            maxHeight:"100%",
+            boxShadow:"0 24px 64px rgba(0,0,0,.5)", border:`1px solid ${T.border}`,
+            overflow:"hidden", display:"flex", flexDirection:"column",
+          }}>
+            <div style={{ overflowY:"auto", flex:1, padding:24 }}>
+              <button onClick={() => setShowDetail(false)}
+                style={{ background:T.light, border:"none", borderRadius:"50%",
+                  width:30, height:30, color:T.text, cursor:"pointer",
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  marginBottom:14, fontSize:16 }}>
+                ×
+              </button>
+
+              <div style={{ fontSize:22, fontWeight:900, color:T.navy, marginBottom:4 }}>
+                {winner.name}
+              </div>
+              {winner.type && (
+                <span style={{ background:T.light, color:T.muted, fontSize:11, fontWeight:700,
+                  padding:"3px 9px", borderRadius:6, textTransform:"uppercase", letterSpacing:.5 }}>
+                  {winner.type}
+                </span>
+              )}
+
+              {winner.description && (
+                <div style={{ fontSize:14, color:T.muted, lineHeight:1.6, marginTop:14 }}>
+                  {winner.description}
+                </div>
+              )}
+
+              <div style={{ display:"flex", gap:8, marginTop:18 }}>
+                {winner.phone && (
+                  <a href={`tel:${winner.phone}`}
+                    style={{ flex:1, background:"#dcfce7", color:"#166534", textDecoration:"none",
+                      borderRadius:10, padding:"12px", fontSize:14, fontWeight:700, textAlign:"center",
+                      display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+                    📞 Call
+                  </a>
+                )}
+                {winner.mapLink && (
+                  <a href={winner.mapLink} target="_blank" rel="noopener noreferrer"
+                    style={{ flex:1, background:"#eff6ff", color:"#1d4ed8", textDecoration:"none",
+                      borderRadius:10, padding:"12px", fontSize:14, fontWeight:700, textAlign:"center",
+                      display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+                    📍 Directions
+                  </a>
+                )}
+              </div>
+
+              {(winner.menuImages || []).length > 0 && (
+                <div style={{ marginTop:20 }}>
+                  <div style={{ fontSize:12, fontWeight:700, color:T.muted,
+                    textTransform:"uppercase", letterSpacing:.5, marginBottom:10 }}>
+                    Menu
+                  </div>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:8 }}>
+                    {winner.menuImages.map((url, i) => (
+                      <img key={i} src={url} alt={`Menu ${i+1}`}
+                        onClick={() => setLightbox(url)}
+                        style={{ width:"100%", aspectRatio:"1", objectFit:"cover",
+                          borderRadius:10, border:`1px solid ${T.border}`, cursor:"pointer" }}/>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Menu image lightbox */}
+      {lightbox && (
+        <div onClick={() => setLightbox(null)} style={{
+          position:"fixed", inset:0, background:"rgba(0,0,0,.92)", zIndex:10001,
+          display:"flex", alignItems:"center", justifyContent:"center",
+          padding:20, boxSizing:"border-box",
+        }}>
+          <img src={lightbox} alt="Menu full view"
+            style={{ maxWidth:"100%", maxHeight:"100%", objectFit:"contain", borderRadius:8 }}/>
+          <button onClick={() => setLightbox(null)}
+            style={{ position:"fixed", top:20, right:20, background:"rgba(255,255,255,.15)",
+              border:"none", borderRadius:"50%", width:36, height:36, color:"#fff",
+              fontSize:18, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
+            ×
+          </button>
         </div>
       )}
 
