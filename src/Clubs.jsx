@@ -20,7 +20,8 @@ const IC = {
 };
 
 function ClubAdminLoginModal({ clubs, clubPins, onLogin, onClose, T }) { 
-  const [selectedClub, setSelectedClub] = useState(clubs[0]?.name || "");
+  const sortedClubs = [...clubs].sort((a, b) => a.name.localeCompare(b.name));
+  const [selectedClub, setSelectedClub] = useState(sortedClubs[0]?.name || "");
   const [pin,  setPin]  = useState("");
   const [err,  setErr]  = useState("");
   const [show, setShow] = useState(false);
@@ -59,7 +60,7 @@ return (
           padding:"8px 12px", fontSize:14, boxSizing:"border-box",
           background:T.inputBg, color:T.text, fontFamily:"inherit",
           marginBottom:12, display:"block" }}>
-        {clubs.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
+        {sortedClubs.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
       </select>
 
       <div style={{ fontSize:11, fontWeight:600, color:T.muted, marginBottom:4,
