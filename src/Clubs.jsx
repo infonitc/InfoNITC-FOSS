@@ -170,7 +170,7 @@ export default function ClubsSection({ data, setData, isAdmin, T, isMobile }) {
   const fv = k => e => setClubForm(p => ({ ...p, [k]: e.target.value }));
   const CATS = ["Technical","Cultural","Social","Arts","Literary","Sports"];
 
-
+  const sortedClubs = [...data.clubs].sort((a, b) => a.name.localeCompare(b.name));
   const today = new Date().toISOString().slice(0, 10);
   const allUpcomingEvents = Object.entries(data.clubEvents || {})
     .flatMap(([clubName, events]) =>
@@ -180,9 +180,15 @@ export default function ClubsSection({ data, setData, isAdmin, T, isMobile }) {
     )
     .sort((a, b) => (a.date||"9999").localeCompare(b.date||"9999"));
 
-  const del     = i => { const c=[...data.clubs]; c.splice(i,1); setData({...data,clubs:c}); };
+  const del = (clubName) => {
+    etData({ ...data, clubs: data.clubs.filter(c => c.name !== clubName) });
+  };
   const add     = () => { setData({...data,clubs:[...data.clubs,clubForm]}); setShowAddClub(false); setClubForm({name:"",category:"Technical",desc:"",contact:""}); };
-  const saveEdit= i => { const c=[...data.clubs]; c[i]=clubForm; setData({...data,clubs:c}); setEditingClub(null); };
+  const saveEdit = (originalName) => {
+    const updated = data.clubs.map(c => c.name === originalName ? clubForm : c);
+    setData({ ...data, clubs: updated });
+    setEditingClub(null);
+  };
 
   const savePin = async (clubName, pin) => {
     const updatedPins = { ...clubPins, [clubName]: pin };
@@ -427,14 +433,14 @@ export default function ClubsSection({ data, setData, isAdmin, T, isMobile }) {
       {/* Club cards grid */}
       {view === "clubs" && (
         <div className="grid-clubs">
-          {data.clubs.map((cl, i) => {
+          {sortedClubs.map((cl, i) => {
           const eventCount = ((data.clubEvents || {})[cl.name] || []).length;
           const upcomingCount = ((data.clubEvents || {})[cl.name] || [])
             .filter(e => !e.date || e.date >= new Date().toISOString().slice(0,10)).length;
           const hasPin = !!(clubPins[cl.name]);
           const isThisClubAdmin = clubAdminOf === cl.name;
 
-          if (editingClub === i) return (
+          if (editingClub === cl.name) return (
             <div key={i} style={{ background:T.surface, border:`1px solid ${T.border}`,
               borderRadius:12, padding:16 }}>
               {[["name","Club Name"],["contact","Contact Email"]].map(([k,l])=>(
@@ -463,7 +469,7 @@ export default function ClubsSection({ data, setData, isAdmin, T, isMobile }) {
                     background:T.inputBg, color:T.text, fontFamily:"inherit", resize:"vertical" }}/>
               </div>
               <div style={{ display:"flex", gap:8 }}>
-                <button onClick={() => saveEdit(i)}
+                <button onClick={() => saveEdit(cl.name)}
                   style={{ background:T.navy, color:"#fff", border:"none", borderRadius:8,
                     padding:"8px 14px", fontSize:13, fontWeight:600,
                     display:"inline-flex", alignItems:"center", gap:5, cursor:"pointer" }}>
@@ -511,11 +517,11 @@ export default function ClubsSection({ data, setData, isAdmin, T, isMobile }) {
                   )}
                   {isAdmin && (
                     <>
-                      <button onClick={e => { e.stopPropagation(); setEditingClub(i); setClubForm({name:cl.name,category:cl.category,desc:cl.desc,contact:cl.contact}); }}
+                      <button onClick={e => { e.stopPropagation(); setEditingClub(cl.name); setClubForm({name:cl.name,category:cl.category,desc:cl.desc,contact:cl.contact}); }}
                         style={{ background:"none", border:"none", color:T.navy, cursor:"pointer", padding:"3px 5px", display:"flex" }}>
                         {IC.edit}
                       </button>
-                      <button onClick={e => { e.stopPropagation(); del(i); }}
+                      <button onClick={e => { e.stopPropagation(); del(cl.name); }}
                         style={{ background:"none", border:"none", color:"#dc2626", cursor:"pointer", padding:"3px 5px", display:"flex" }}>
                         {IC.del}
                       </button>
