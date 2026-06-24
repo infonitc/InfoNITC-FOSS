@@ -1,9 +1,11 @@
 # InfoNITC — Campus Information Portal
 
 A progressive web application built for students of NIT Calicut, providing centralized access to campus information including mess menus, bus schedules, exam timetables, club events, and more. Built with React and Firebase, it supports real-time admin updates, offline access, and is installable as a home screen app.
+No login, no sharing location , no sus activity. iykyk. Just made for the sake of using it.
 
 **Live:** [infonitc.vercel.app](https://infonitc.vercel.app)
 
+(NOTE: Significant help of AI was used in making this project. Consider this as a tool made to use for quick use and deployment)
 ---
  
 ## Table of Contents
